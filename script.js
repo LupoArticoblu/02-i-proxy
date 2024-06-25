@@ -24,22 +24,40 @@ createApp({
         nome: 'Valentina',
         cognome: 'Tanzi',
         eta: 30
-      }
+      },
+      clock: '',
     }
   },
   methods: {
     //metodi e funzioni
+    getClock() {
+      //costante con nuovo oggetto Date
+      const date = new Date();
+      //attribuisco a clock il template literal di date coi metodi
+      this.clock = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+    },
+    startClock() {
+      //nel metodo startClock faccio partire il setInterval
+      setInterval(()=> {
+        //array function(perchè this fa casino) in cui passo la funzione getClock
+        this.getClock()
+      }, 1000);
+    }
   },
   //altri metodi di createApp in vue
   created() {
     //inserisco qui le azioni che voglio scatenare all' inizializzazione delle options
     console.log('app creata');
+    //richiamo getClock
+    this.getClock();
   },
   //inserisco il metodo mounted
   mounted(){
-    //inserisco qui le azioni che voglio scatenare al caricamento dell'app
+    //inserisco qui le azioni che voglio scatenare al caricamento dell'app: per esempio le funzioni da richiamare
     console.log('app caricata');
-
+    //richiamo e monto startClock
+    this.startClock();
+    
     console.log(this.ValentinaTanzi); //ci restituirà un proxy(object) con tutte le variabili contenute nell'oggetto ValentinaTanzi
   },
 }).mount('#app');
